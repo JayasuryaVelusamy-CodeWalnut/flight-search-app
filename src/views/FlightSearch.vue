@@ -19,6 +19,9 @@
               :airports="airports"
               v-model:originCode="originCode"
               v-model:destinationCode="destinationCode"
+              :originError="touched.origin ? validationErrors.origin : ''"
+              :destinationError="touched.destination ? validationErrors.destination : ''"
+              @blur="handleBlur"
             />
           </div>
 
@@ -28,6 +31,9 @@
               :tripType="tripType"
               v-model:departureDate="departureDate"
               v-model:returnDate="returnDate"
+              :departureDateError="touched.departureDate ? validationErrors.departureDate : ''"
+              :returnDateError="touched.returnDate ? validationErrors.returnDate : ''"
+              @blur="handleBlur"
             />
           </div>
 
@@ -95,11 +101,57 @@ const departureDate = ref('')
 const returnDate = ref('')
 const passengers = ref({ adults: 1, children: 0, infants: 0 })
 
-const isValid = computed(() => {
-  const validRoute = !!(originCode.value && destinationCode.value && originCode.value !== destinationCode.value)
-  const validDates = !!(departureDate.value && (tripType.value === 'one-way' || returnDate.value))
-  return validRoute && validDates
+const touched = ref({
+  origin: false,
+  destination: false,
+  departureDate: false,
+  returnDate: false,
 })
+
+const validationErrors = ref({
+  origin: '',
+  destination: '',
+  departureDate: '',
+  returnDate: '',
+})
+
+const validate = () => {
+  const errors = {
+    origin: '',
+    destination: '',
+    departureDate: '',
+    returnDate: '',
+  }
+
+  if (!originCode.value) {
+    errors.origin = 'Origin airport is required.'
+  }
+
+  if (!destinationCode.value) {
+    errors.destination = 'Destination airport is required.'
+  }
+
+  if (originCode.value && destinationCode.value && originCode.value === destinationCode.value) {
+    errors.destination = 'Destination cannot be the same as the origin.'
+  }
+
+  if (!departureDate.value) {
+    errors.departureDate = 'Departure date is required.'
+  }
+
+  if (tripType.value === 'return' && !returnDate.value) {
+    errors.returnDate = 'Return date is required.'
+  }
+
+  validationErrors.value = errors
+  return Object.values(errors).every(error => !error)
+}
+
+const isValid = computed(() => {
+  return Object.values(validationErrors.value).every(error => !error)
+})
+
+watch([originCode, destinationCode, departureDate, returnDate, tripType], validate, { deep: true })
 
 onMounted(async () => {
   loading.value = true
@@ -132,10 +184,21 @@ watch(tripType, (t) => {
 })
 
 const handleSearch = () => {
-  if (!isValid.value) return
+  touched.value = {
+    origin: true,
+    destination: true,
+    departureDate: true,
+    returnDate: true,
+  }
+  if (!validate()) return
+  
   searching.value = true
   searched.value = true
   setTimeout(() => { searching.value = false }, 800)
+}
+
+const handleBlur = (field: 'origin' | 'destination' | 'departureDate' | 'returnDate') => {
+  touched.value[field] = true
 }
 
 const formatDate = (dateString: string) => {

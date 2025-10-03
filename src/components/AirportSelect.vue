@@ -7,6 +7,7 @@
             id="origin" 
             :value="originCode" 
             @change="onOriginChange"
+            @blur="$emit('blur', 'origin')"
             class="block w-full h-16 px-6 py-4 text-lg border-2 border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary rounded-xl bg-white/50 transition-all duration-200 hover:border-primary/50"
             style="text-align-last: center;"
           >
@@ -20,6 +21,7 @@
               {{ a.code }} - {{ a.name }} ({{ a.countryCode }})
             </option>
           </select>
+          <p v-if="originError" class="text-red-500 text-xs mt-1">{{ originError }}</p>
         </div>
 
         <div class="flex justify-center">
@@ -42,6 +44,7 @@
             id="destination" 
             :value="destinationCode" 
             @change="onDestinationChange"
+            @blur="$emit('blur', 'destination')"
             class="block w-full h-16 px-6 py-4 text-lg border-2 border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary rounded-xl bg-white/50 transition-all duration-200 hover:border-primary/50"
             style="text-align-last: center;"
           >
@@ -57,6 +60,7 @@
               </option>
             </template>
           </select>
+          <p v-if="destinationError" class="text-red-500 text-xs mt-1">{{ destinationError }}</p>
         </div>
       </div>
     </div>
@@ -71,11 +75,14 @@ const props = defineProps<{
   airports: Airport[]
   originCode: string
   destinationCode: string
+  originError?: string
+  destinationError?: string
 }>()
 
 const emit = defineEmits<{
   'update:originCode': [string]
   'update:destinationCode': [string]
+  'blur': [field: 'origin' | 'destination']
 }>()
 
 const hasConnections = computed(() => {
@@ -131,5 +138,3 @@ const onDestinationChange = (e: Event) => {
   }
 }
 </script>
-
-

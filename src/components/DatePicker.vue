@@ -13,8 +13,10 @@
         :min="today"
         :value="departureDate"
         @input="$emit('update:departureDate', ($event.target as HTMLInputElement).value)"
+        @blur="$emit('blur', 'departureDate')"
         class="block w-full h-12 px-4 py-2 text-base border-2 border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary rounded-lg bg-white/50 transition-all duration-200 hover:border-primary/50"
       />
+      <p v-if="departureDateError" class="text-red-500 text-xs mt-1">{{ departureDateError }}</p>
     </div>
 
     <div class="form-group" v-if="showReturn">
@@ -30,8 +32,10 @@
         :min="departureDate || today"
         :value="returnDate"
         @input="$emit('update:returnDate', ($event.target as HTMLInputElement).value)"
+        @blur="$emit('blur', 'returnDate')"
         class="block w-full h-12 px-4 py-2 text-base border-2 border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary rounded-lg bg-white/50 transition-all duration-200 hover:border-primary/50"
       />
+      <p v-if="returnDateError" class="text-red-500 text-xs mt-1">{{ returnDateError }}</p>
     </div>
   </div>
 </template>
@@ -43,15 +47,16 @@ const props = defineProps<{
   tripType: 'one-way' | 'return'
   departureDate: string
   returnDate: string
+  departureDateError?: string
+  returnDateError?: string
 }>()
 
 defineEmits<{
   'update:departureDate': [string]
   'update:returnDate': [string]
+  'blur': [field: 'departureDate' | 'returnDate']
 }>()
 
 const today = computed(() => new Date().toISOString().split('T')[0])
 const showReturn = computed(() => props.tripType === 'return')
 </script>
-
-
