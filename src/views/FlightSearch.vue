@@ -2,7 +2,10 @@
   <div class="flight-search-view w-full px-4 sm:px-6 lg:px-8 py-8">
     <div class="max-w-7xl mx-auto">
       <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border-2 border-white/20 p-8">
-        <div class="space-y-8">
+        <div v-if="loading" class="space-y-8">
+          <LoadingSkeleton :count="5" />
+        </div>
+        <div v-else class="space-y-8">
           <ErrorMessage v-if="error" title="Error" :message="error" />
 
           <div class="mb-8">
@@ -70,6 +73,7 @@ import DatePicker from '../components/DatePicker.vue'
 import PassengerSelector from '../components/PassengerSelector.vue'
 import SearchButton from '../components/SearchButton.vue'
 import ErrorMessage from '../components/ErrorMessage.vue'
+import LoadingSkeleton from '../components/LoadingSkeleton.vue'
 
 type TripType = 'one-way' | 'return'
 
