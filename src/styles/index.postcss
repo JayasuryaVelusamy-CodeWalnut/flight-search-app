@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply text-base leading-relaxed;
+  }
+
+  body {
+    @apply bg-gradient-primary min-h-screen text-gray-800 font-sans;
+  }
+
+  #app {
+    @apply min-h-screen flex flex-col;
+  }
+}
+
+@layer components {
+  .form-input {
+    @apply block w-full h-14 rounded-xl border-2 border-primary/20 shadow-md focus:border-primary focus:ring-primary text-lg transition-all duration-200 bg-white/90;
+  }
+
+  .form-select {
+    @apply block w-full h-14 px-5 py-3 text-lg border-2 border-primary/20 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary rounded-xl shadow-md bg-white/90 hover:bg-white transition-all duration-200;
+  }
+  
+  .btn {
+    @apply inline-flex items-center px-6 py-3 border-2 border-transparent text-lg font-medium rounded-xl shadow-lg text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-primary transition-all duration-300 transform hover:scale-105;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center px-6 py-3 border-2 border-primary/30 text-lg font-medium rounded-xl text-primary bg-white hover:bg-primary hover:text-white focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-primary transition-all duration-300 shadow-lg transform hover:scale-105;
+  }
+
+  .card {
+    @apply bg-white/95 backdrop-blur-custom rounded-2xl p-8 shadow-xl border-2 border-white/30 hover:shadow-2xl transition-all duration-300;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-primary bg-clip-text text-transparent font-bold;
+  }
+
+  .sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  }
+
+  .trip-type-selector {
+    @apply flex bg-primary/10 rounded-2xl p-2 mb-8 shadow-inner border-none;
+  }
+
+  .airport-select {
+    @apply grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-6 items-end mb-8 bg-white/50 p-6 rounded-2xl;
+  }
+
+  .form-row {
+    @apply grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-6 items-end mb-8 bg-white/50 p-6 rounded-2xl;
+  }
+
+  .dates-row {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6 bg-white/50 p-6 rounded-2xl;
+  }
+
+  .passenger-selector {
+    @apply flex flex-wrap gap-8 bg-white/50 p-6 rounded-2xl;
+  }
+
+  .passenger-type {
+    @apply flex items-center gap-4 min-w-[150px] bg-white/80 p-4 rounded-xl shadow-md;
+  }
+
+  .passenger-controls {
+    @apply flex items-center gap-3 bg-primary/10 rounded-xl p-2;
+  }
+
+  .search-button {
+    @apply w-full py-5 px-10 bg-gradient-primary text-white rounded-xl text-xl font-bold shadow-xl hover:translate-y-[-4px] hover:shadow-2xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-6 min-h-[68px] transform hover:scale-105;
+  }
+
+  .flight-card {
+    @apply bg-white/90 border-2 border-primary/20 rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-[1.02];
+  }
+
+  .flight-header {
+    @apply flex justify-between items-center mb-6 pb-4 border-b-2 border-primary/20;
+  }
+
+  .flight-details {
+    @apply flex justify-between items-center gap-6 flex-wrap lg:flex-nowrap;
+  }
+
+  .flight-route {
+    @apply flex items-center gap-8 flex-1 bg-primary/5 p-4 rounded-xl;
+  }
+
+  .swap-button {
+    @apply flex items-center justify-center w-16 h-16 bg-gradient-primary rounded-2xl cursor-pointer transition-all duration-300 shadow-xl hover:scale-110 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-white focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none transform hover:rotate-180;
+  }
+
+  .passenger-count-button {
+    @apply w-12 h-12 flex items-center justify-center border-none bg-white rounded-xl cursor-pointer font-bold text-xl text-primary transition-all duration-300 shadow-md hover:bg-primary hover:text-white focus:outline-none focus:ring-4 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-110;
+  }
+}
