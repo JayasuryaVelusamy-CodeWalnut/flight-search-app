@@ -100,25 +100,48 @@ src/
 7. **Search History**: Save and display previous searches
 8. **Error Handling**: Better error messages and fallback states
 
-## Time Spent
+## 10-Hour Implementation Plan
 
-**Total Development Time: ~6-8 hours**
+Here is a detailed breakdown of the development process, estimated to take 10 hours:
 
-### Breakdown:
-- Project setup and configuration: ~1 hour
-- Vue.js components development: ~3 hours
-- SCSS styling and responsive design: ~2 hours
-- API integration and testing: ~1 hour
-- Documentation and final touches: ~1 hour
+- **Hour 1: Project Setup & Configuration (1 hour)**
+  - Initialize Vue 3 project with Vite and TypeScript.
+  - Install and configure Tailwind CSS for styling.
+  - Set up project structure (folders for components, services, types, etc.).
+  - Configure Vitest for unit testing.
 
-### Areas for Improvement:
-- More sophisticated error handling for API failures
-- Loading states and skeleton screens
-- Advanced form validation with better UX
-- Unit tests for components
-- Integration tests for API calls
-- Accessibility improvements (ARIA labels, keyboard navigation)
-- Performance optimization (lazy loading, code splitting)
+- **Hour 2-3: Core UI Components (2 hours)**
+  - Develop `FlightTypeSwitch` component for one-way/return selection.
+  - Create `DatePicker` component for selecting departure and return dates.
+  - Build `PassengerSelector` component for managing adults, children, and infants.
+  - Develop `SearchButton` component with loading and disabled states.
+
+- **Hour 4-5: API Integration & Airport Selection (2 hours)**
+  - Create an API service using Axios to fetch airport data from the Sabre API.
+  - Implement the `AirportSelect` component with searchable dropdowns for origin and destination.
+  - Populate airport dropdowns with data from the API.
+  - Handle loading and error states for the API call.
+
+- **Hour 6-7: Main View & Form Logic (2 hours)**
+  - Assemble the main `FlightSearch.vue` view by combining all the smaller components.
+  - Implement the main form logic using Vue's Composition API (`ref`, `computed`).
+  - Add form validation to ensure all required fields are filled.
+  - Manage the state for trip type, dates, passengers, and selected airports.
+
+- **Hour 8: Styling & Responsiveness (1 hour)**
+  - Apply global styles and Tailwind CSS utility classes.
+  - Ensure the layout is fully responsive and works well on mobile, tablet, and desktop screens.
+  - Add subtle animations and transitions for a better user experience.
+
+- **Hour 9: Search Results & State Management (1 hour)**
+  - Implement the search results display section.
+  - Simulate a search action and display a summary of the selected criteria.
+  - Refine state management for search status (e.g., `searching`, `searched`).
+
+- **Hour 10: Final Touches & Documentation (1 hour)**
+  - Write unit tests for key components and logic.
+  - Perform final testing and bug fixes.
+  - Write and finalize the `README.md` documentation.
 
 ## Browser Support
 

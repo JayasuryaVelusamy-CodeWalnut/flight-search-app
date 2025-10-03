@@ -3,13 +3,13 @@
     <div class="max-w-7xl mx-auto">
       <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border-2 border-white/20 p-8">
         <div class="space-y-8">
-          <!-- Trip Type Switch -->
+          <ErrorMessage v-if="error" title="Error" :message="error" />
+
           <div class="mb-8">
             <h2 class="text-base font-medium text-primary mb-3">Trip Type</h2>
             <FlightTypeSwitch v-model="tripType" />
           </div>
 
-          <!-- Airport Selection -->
           <div class="border-t-2 border-primary/10 pt-8">
             <h2 class="text-base font-medium text-primary mb-3">Route</h2>
             <AirportSelect
@@ -19,7 +19,6 @@
             />
           </div>
 
-          <!-- Date Selection -->
           <div class="border-t-2 border-primary/10 pt-8">
             <h2 class="text-base font-medium text-primary mb-3">Travel Dates</h2>
             <DatePicker
@@ -29,7 +28,6 @@
             />
           </div>
 
-          <!-- Passenger Selection -->
           <div class="border-t-2 border-primary/10 pt-8">
             <PassengerSelector
               v-model:adults="passengers.adults"
@@ -38,7 +36,6 @@
             />
           </div>
 
-          <!-- Search Button -->
           <div class="border-t-2 border-primary/10 pt-8">
             <SearchButton 
               :disabled="!isValid || searching" 
@@ -50,7 +47,6 @@
         </div>
       </div>
 
-      <!-- Search Results -->
       <div class="mt-8 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border-2 border-white/20 p-8" v-if="searched">
         <h2 class="text-lg font-medium text-primary mb-3">Search Summary</h2>
         <ul class="space-y-3 text-lg">
@@ -73,6 +69,7 @@ import AirportSelect from '../components/AirportSelect.vue'
 import DatePicker from '../components/DatePicker.vue'
 import PassengerSelector from '../components/PassengerSelector.vue'
 import SearchButton from '../components/SearchButton.vue'
+import ErrorMessage from '../components/ErrorMessage.vue'
 
 type TripType = 'one-way' | 'return'
 
@@ -85,6 +82,7 @@ const airports = ref([] as Array<{
 const loading = ref(false)
 const searching = ref(false)
 const searched = ref(false)
+const error = ref<string | null>(null)
 
 const tripType = ref<TripType>('return')
 const originCode = ref('')
@@ -101,14 +99,24 @@ const isValid = computed(() => {
 
 onMounted(async () => {
   loading.value = true
-  const result = await fetchAirports()
-  airports.value = (result as unknown) as Array<{
-    code: string;
-    name: string;
-    countryCode: string;
-    connections?: Array<{ code: string }>;
-  }>
-  loading.value = false
+  error.value = null
+  try {
+    const result = await fetchAirports()
+    airports.value = (result as unknown) as Array<{
+      code: string;
+      name: string;
+      countryCode: string;
+      connections?: Array<{ code: string }>;
+    }>
+  } catch (err) {
+    if (err instanceof Error) {
+      error.value = err.message
+    } else {
+      error.value = 'An unexpected error occurred.'
+    }
+  } finally {
+    loading.value = false
+  }
 
   const tomorrow = new Date()
   tomorrow.setDate(tomorrow.getDate() + 1)

@@ -31,7 +31,6 @@ export async function fetchAirports(): Promise<Airport[]> {
       }
     });
     
-    // Transform API response to match our Airport type
     const airports: Airport[] = (response.data.airports || []).map(airport => {
       const connections: AirportConnection[] | undefined = airport.connections?.map(conn => ({
         code: conn.code
@@ -44,9 +43,9 @@ export async function fetchAirports(): Promise<Airport[]> {
         connections
       };
     });
-    
     return airports;
   } catch (error) {
-    return [];
+    console.error('API Error fetching airports:', error);
+    throw new Error('Failed to fetch airport data. Please try again later.');
   }
 }
