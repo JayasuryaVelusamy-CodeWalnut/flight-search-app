@@ -22,6 +22,7 @@
               :originError="touched.origin ? validationErrors.origin : ''"
               :destinationError="touched.destination ? validationErrors.destination : ''"
               @blur="handleBlur"
+              :loading="loading"
             />
           </div>
 
@@ -58,13 +59,28 @@
 
       <div class="mt-8 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border-2 border-white/20 p-8" v-if="searched">
         <h2 class="text-lg font-medium text-primary mb-3">Search Summary</h2>
-        <ul class="space-y-3 text-lg">
-          <li><strong>Trip:</strong> {{ tripType === 'one-way' ? 'One-way' : 'Return' }}</li>
-          <li><strong>Route:</strong> {{ originCode }} → {{ destinationCode }}</li>
-          <li><strong>Departure:</strong> {{ formatDate(departureDate) }}</li>
-          <li v-if="tripType === 'return' && returnDate"><strong>Return:</strong> {{ formatDate(returnDate) }}</li>
-          <li><strong>Passengers:</strong> {{ passengers.adults }} adults, {{ passengers.children }} children, {{ passengers.infants }} infants</li>
-        </ul>
+        <dl class="space-y-3 text-lg">
+          <div class="flex">
+            <dt class="w-1/4 font-bold">Trip:</dt>
+            <dd class="w-3/4">{{ tripType === 'one-way' ? 'One-way' : 'Return' }}</dd>
+          </div>
+          <div class="flex">
+            <dt class="w-1/4 font-bold">Route:</dt>
+            <dd class="w-3/4">{{ originCode }} → {{ destinationCode }}</dd>
+          </div>
+          <div class="flex">
+            <dt class="w-1/4 font-bold">Departure:</dt>
+            <dd class="w-3/4">{{ formatDate(departureDate) }}</dd>
+          </div>
+          <div class="flex" v-if="tripType === 'return' && returnDate">
+            <dt class="w-1/4 font-bold">Return:</dt>
+            <dd class="w-3/4">{{ formatDate(returnDate) }}</dd>
+          </div>
+          <div class="flex">
+            <dt class="w-1/4 font-bold">Passengers:</dt>
+            <dd class="w-3/4">{{ passengers.adults }} adults, {{ passengers.children }} children, {{ passengers.infants }} infants</dd>
+          </div>
+        </dl>
       </div>
     </div>
   </div>
@@ -125,10 +141,14 @@ const validate = () => {
 
   if (!originCode.value) {
     errors.origin = 'Origin airport is required.'
+  } else if (!airports.value.some(airport => airport.code === originCode.value)) {
+    errors.origin = 'Invalid origin airport code.'
   }
 
   if (!destinationCode.value) {
     errors.destination = 'Destination airport is required.'
+  } else if (!airports.value.some(airport => airport.code === destinationCode.value)) {
+    errors.destination = 'Invalid destination airport code.'
   }
 
   if (originCode.value && destinationCode.value && originCode.value === destinationCode.value) {

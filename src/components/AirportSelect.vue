@@ -10,8 +10,9 @@
             @blur="$emit('blur', 'origin')"
             class="block w-full h-16 px-6 py-4 text-lg border-2 border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary rounded-xl bg-white/50 transition-all duration-200 hover:border-primary/50"
             style="text-align-last: center;"
+            :disabled="airports.length === 0 || loading"
           >
-            <option value="" disabled>Select origin airport</option>
+            <option value="" disabled>{{ loading ? 'Loading airports...' : (airports.length === 0 ? 'No airports available' : 'Select origin airport') }}</option>
             <option 
               v-for="a in airports" 
               :key="a.code" 
@@ -47,6 +48,7 @@
             @blur="$emit('blur', 'destination')"
             class="block w-full h-16 px-6 py-4 text-lg border-2 border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary rounded-xl bg-white/50 transition-all duration-200 hover:border-primary/50"
             style="text-align-last: center;"
+            :disabled="airports.length === 0"
           >
             <option value="" disabled>{{ destinationSelectMessage }}</option>
             <template v-if="hasConnections">
@@ -71,13 +73,19 @@ import { computed } from 'vue'
 
 import type { Airport } from '../types/airport';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   airports: Airport[]
   originCode: string
   destinationCode: string
   originError?: string
   destinationError?: string
-}>()
+  loading?: boolean
+}>(), {
+  airports: () => [],
+  originError: '',
+  destinationError: '',
+  loading: false,
+})
 
 const emit = defineEmits<{
   'update:originCode': [string]
@@ -85,10 +93,13 @@ const emit = defineEmits<{
   'blur': [field: 'origin' | 'destination']
 }>()
 
+const selectedOrigin = computed(() => {
+  return props.airports.find(a => a.code === props.originCode)
+})
+
 const hasConnections = computed(() => {
-  const origin = props.airports.find(a => a.code === props.originCode)
-  if (!origin || !origin.connections) return false
-  return origin.connections.length > 0
+  if (!selectedOrigin.value || !selectedOrigin.value.connections) return false
+  return selectedOrigin.value.connections.length > 0
 })
 
 const destinationSelectMessage = computed(() => {
@@ -97,9 +108,8 @@ const destinationSelectMessage = computed(() => {
 })
 
 const filteredDestinations = computed(() => {
-  const origin = props.airports.find(a => a.code === props.originCode)
-  if (!origin || !origin.connections?.length) return []
-  const allowedCodes = new Set(origin.connections.map(c => c.code))
+  if (!selectedOrigin.value || !selectedOrigin.value.connections?.length) return []
+  const allowedCodes = new Set(selectedOrigin.value.connections.map(c => c.code))
   return props.airports.filter(a => allowedCodes.has(a.code))
 })
 

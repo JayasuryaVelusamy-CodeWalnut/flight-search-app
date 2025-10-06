@@ -43,13 +43,16 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   tripType: 'one-way' | 'return'
   departureDate: string
   returnDate: string
   departureDateError?: string
   returnDateError?: string
-}>()
+}>(), {
+  departureDateError: '',
+  returnDateError: '',
+})
 
 defineEmits<{
   'update:departureDate': [string]

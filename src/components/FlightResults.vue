@@ -6,36 +6,36 @@
       
       <div class="search-summary">
         <h3>Your Search Criteria:</h3>
-        <div class="summary-grid">
+        <dl class="summary-grid">
           <div class="summary-item">
-            <span class="label">Trip Type:</span>
-            <span class="value">{{ formatTripType(results.criteria.tripType) }}</span>
+            <dt class="label">Trip Type:</dt>
+            <dd class="value">{{ formatTripType(results.criteria.tripType) }}</dd>
           </div>
           
           <div class="summary-item">
-            <span class="label">Route:</span>
-            <span class="value">
+            <dt class="label">Route:</dt>
+            <dd class="value">
               {{ results.criteria.origin?.code }} → {{ results.criteria.destination?.code }}
-            </span>
+            </dd>
           </div>
           
           <div class="summary-item">
-            <span class="label">Departure:</span>
-            <span class="value">{{ formatDate(results.criteria.departureDate) }}</span>
+            <dt class="label">Departure:</dt>
+            <dd class="value">{{ formatDate(results.criteria.departureDate) }}</dd>
           </div>
           
           <div class="summary-item" v-if="results.criteria.returnDate">
-            <span class="label">Return:</span>
-            <span class="value">{{ formatDate(results.criteria.returnDate) }}</span>
+            <dt class="label">Return:</dt>
+            <dd class="value">{{ formatDate(results.criteria.returnDate) }}</dd>
           </div>
           
           <div class="summary-item">
-            <span class="label">Passengers:</span>
-            <span class="value">
+            <dt class="label">Passengers:</dt>
+            <dd class="value">
               {{ formatPassengers(results.criteria.passengers) }}
-            </span>
+            </dd>
           </div>
-        </div>
+        </dl>
       </div>
 
       <div class="airport-details" v-if="results.criteria.origin || results.criteria.destination">

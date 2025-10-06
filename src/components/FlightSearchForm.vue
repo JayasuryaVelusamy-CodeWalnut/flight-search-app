@@ -1,6 +1,6 @@
 <template>
   <div class="flight-search-form p-6">
-    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6">
+    <form class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6" @submit.prevent="handleSearch">
       <fieldset class="trip-type-selector">
         <legend class="sr-only">Select trip type</legend>
         <button 
@@ -178,7 +178,7 @@
 
       <button 
         class="search-button" 
-        @click="handleSearch"
+        type="submit"
         :disabled="!isFormValid || searching"
         aria-describedby="search-help"
       >
@@ -186,7 +186,7 @@
         <span v-else>Search Flights</span>
       </button>
       <span id="search-help" class="sr-only">Search for available flights based on your criteria</span>
-    </div>
+    </form>
   </div>
 </template>
 
