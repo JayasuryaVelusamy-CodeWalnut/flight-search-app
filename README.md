@@ -2,17 +2,21 @@
 
 A modern Vue.js flight search application with integration to the Sabre API for airport data.
 
+## Quick Demo
+
+Check out the quick demo video of the application in action: [Watch Demo](https://drive.google.com/file/d/11UIer3DO_URGOjwA7lJufVhGPL7Zuk0k/view?usp=sharing)
+
 ## Features
 
-- ✅ **Trip Type Selection**: Toggle between one-way and return flights
-- ✅ **Airport Selection**: Origin and destination dropdowns populated from Sabre API
-- ✅ **Date Selection**: Departure and return date pickers with conditional visibility
-- ✅ **Passenger Count**: Adults, children, and infants selection with +/- controls
-- ✅ **Search Functionality**: Displays search criteria and results
-- ✅ **Modern UI**: Beautiful design with gradient backgrounds and smooth animations
-- ✅ **Responsive Design**: Works on desktop, tablet, and mobile devices
-- ✅ **TypeScript Support**: Full type safety throughout the application
-- ✅ **SCSS Styling**: Modern CSS with custom design system
+-  **Trip Type Selection**: Toggle between one-way and return flights
+-  **Airport Selection**: Origin and destination dropdowns populated from Sabre API
+-  **Date Selection**: Departure and return date pickers with conditional visibility
+-  **Passenger Count**: Adults, children, and infants selection with +/- controls
+-  **Search Functionality**: Displays search criteria and results
+-  **Modern UI**: Beautiful design with gradient backgrounds and smooth animations
+-  **Responsive Design**: Works on desktop, tablet, and mobile devices
+-  **TypeScript Support**: Full type safety throughout the application
+-  **SCSS Styling**: Modern CSS with custom design system
 
 ## API Integration
 
@@ -80,6 +84,7 @@ src/
 - **Styling**: SCSS with modern CSS features
 - **HTTP Client**: Axios
 - **Development Server**: Configured for localhost:8080 to avoid CORS issues
+- **UI Implementation**: Custom designed and implemented without Figma or design mockups, focusing on modern UI/UX principles and best practices
 
 ## Development Notes
 
@@ -129,9 +134,11 @@ Here is a detailed breakdown of the development process, estimated to take 10 ho
   - Manage the state for trip type, dates, passengers, and selected airports.
 
 - **Hour 8: Styling & Responsiveness (1 hour)**
-  - Apply global styles and Tailwind CSS utility classes.
-  - Ensure the layout is fully responsive and works well on mobile, tablet, and desktop screens.
-  - Add subtle animations and transitions for a better user experience.
+  - Design and implement custom UI components without relying on design mockups
+  - Apply global styles and Tailwind CSS utility classes following modern design principles
+  - Ensure the layout is fully responsive and works well on mobile, tablet, and desktop screens
+  - Add subtle animations and transitions for a better user experience
+  - Create a cohesive visual language through consistent spacing, colors, and typography
 
 - **Hour 9: Search Results & State Management (1 hour)**
   - Implement the search results display section.

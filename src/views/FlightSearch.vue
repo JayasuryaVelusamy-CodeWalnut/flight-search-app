@@ -78,7 +78,7 @@
           </div>
           <div class="flex">
             <dt class="w-1/4 font-bold">Passengers:</dt>
-            <dd class="w-3/4">{{ passengers.adults }} adults, {{ passengers.children }} children, {{ passengers.infants }} infants</dd>
+            <dd class="w-3/4">{{ formattedPassengers }}</dd>
           </div>
         </dl>
       </div>
@@ -226,4 +226,22 @@ const formatDate = (dateString: string) => {
   const [year, month, day] = dateString.split('-')
   return `${day}-${month}-${year}`
 }
+
+const formatPassengerCount = (count: number, type: string) => {
+  if (count === 0) return ''
+  if (type === 'child') {
+    return `${count} ${count === 1 ? 'child' : 'children'}`
+  }
+  return `${count} ${type}${count === 1 ? '' : 's'}`
+}
+
+const formattedPassengers = computed(() => {
+  const parts = [
+    formatPassengerCount(passengers.value.adults, 'adult'),
+    formatPassengerCount(passengers.value.children, 'child'),
+    formatPassengerCount(passengers.value.infants, 'infant')
+  ].filter(Boolean)
+  
+  return parts.join(', ')
+})
 </script>
